@@ -40,9 +40,11 @@ void handleClient(int clientSocket)
         }
         else
         {
-            cout << "Correct Guess! Prisoner escaped." << endl;
             write(clientSocket, "Correct Guess", sizeof("Correct Guess"));
-            close(clientSocket);
+            char clientResponse[1024];
+	    read(clientSocket, &clientResponse, 100);
+	    cout << clientResponse << endl;
+	    close(clientSocket);
             return;
         }
     }
@@ -63,7 +65,7 @@ int main()
     while (true)
     {
         int clientSocket = accept(serverSocket, NULL, NULL);
-        thread clientThread(handleClient,clientSocket);
+        thread clientThread([clientSocket](){handleClient(clientSocket);});
         clientThread.detach();
     }
 

@@ -1,19 +1,12 @@
 #include <iostream>
+#include <unistd.h>
+using namespace std;
 
-void printPlusTen(int num) {
-    // Lambda expression capturing 'num' by value and adding 10 to it
-    auto addTen = [num]() {
-        int result = num + 10;
-        std::cout << "Result: " << result << std::endl;
-    };
+int main(){
 
-    // Calling the lambda function
-    addTen();
+
+	cout << "Hare Krishna!!"<< endl;
+        sleep(2);
+
+return 0;
 }
-
-int main() {
-    int number = 5;
-    printPlusTen(number);
-    return 0;
-}
-

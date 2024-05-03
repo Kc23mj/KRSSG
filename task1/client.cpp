@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
@@ -5,6 +6,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -30,13 +32,27 @@ int main() {
         read(clientSocket, &serverResponse, sizeof(serverResponse));
         cout << "Server: " << serverResponse << endl;
         if (strcmp(serverResponse, "Correct Guess") == 0) {
-            cout << "You escaped!" << endl;
+                int i;
+		read(clientSocket, &i, sizeof(int));
+		char str1[] = "Client ";int z = 0;
+		while(str1[z] != '\0') z++;
+		char n = '0' + i;
+		str1[z++] = n; str1[z] = '\0';
+		char str2[] = " is excaped!!";
+                char clientResponse[1024];
+		strcpy(clientResponse, str1);
+		strcat(clientResponse, str2);
+		write(clientSocket, &clientResponse, sizeof(clientResponse));
+	       	cout << "You escaped!" << endl;
             break;
         }
     }
 
+
     // Close socket
     close(clientSocket);
-    return 0;
+sleep(2);
+return 0;
 }
+
 
